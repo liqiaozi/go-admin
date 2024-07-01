@@ -1,0 +1,31 @@
+{
+  "app": {
+    "appName": "go-admin",
+    "port": 8888
+  },
+  "log": {
+    "level": "info",
+    "rootDir": "",
+    "filename": "",
+    "format": "",
+    "showLine": true,
+    "maxBackups": 3,
+    "maxSize": 100,
+    "maxAge": 30,
+    "compress": true
+  },
+  "database": {
+    "driver": "mysql",
+    "host": "127.0.0.1",
+    "port": 3306,
+    "database": "go-test",
+    "username": "root",
+    "password": "root",
+    "charset": "utf8mb4",
+    "maxIdleConnections": 10,
+    "maxOpenConnections": 100,
+    "logMode": "info",
+    "enableFileLogWriter": true,
+    "logFilename": "sql.log"
+  }
+}
