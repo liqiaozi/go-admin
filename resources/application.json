@@ -1,0 +1,17 @@
+{
+  "app": {
+    "appName": "go-admin",
+    "port": 8888
+  },
+  "log": {
+    "level": "info",
+    "rootDir": "",
+    "filename": "",
+    "format": "",
+    "showLine": true,
+    "maxBackups": 3,
+    "maxSize": 100,
+    "maxAge": 30,
+    "compress": true
+  }
+}
