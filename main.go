@@ -20,7 +20,7 @@ func main() {
 	// 创建http服务器
 	r := gin.Default()
 	srv := &http.Server{
-		Addr:    ":" + global.App.Server.AppConfig.Port,
+		Addr:    ":" + global.App.Server.ServiceInfo.Port,
 		Handler: r,
 	}
 	go func() {
