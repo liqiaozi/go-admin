@@ -1,4 +1,4 @@
-package utils
+package pathutils
 
 import "os"
 
@@ -11,6 +11,7 @@ func GetCurrentDir() (string, error) {
 	return dir, nil
 }
 
+// PathExists 判断路径是否存在
 func PathExists(path string) (bool, error) {
 	_, err := os.Stat(path)
 	if err == nil {

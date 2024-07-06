@@ -1,5 +1,6 @@
 package config
 
+// Database 数据库配置
 type Database struct {
 	Driver              string `mapstructure:"driver" json:"driver" yaml:"driver"`
 	Host                string `mapstructure:"host" json:"host" yaml:"host"`

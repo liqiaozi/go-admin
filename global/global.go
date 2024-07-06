@@ -8,7 +8,7 @@ import (
 
 type globalVars struct {
 	ConfigViper *viper.Viper
-	Application config.Application
+	Server      config.Server
 	DB          *gorm.DB
 }
 

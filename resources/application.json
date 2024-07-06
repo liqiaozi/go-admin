@@ -1,6 +1,6 @@
 {
-  "app": {
-    "appName": "go-admin",
+  "serviceInfo": {
+    "name": "go-admin",
     "port": 8888
   },
   "log": {

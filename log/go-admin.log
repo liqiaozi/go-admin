@@ -11,3 +11,5 @@
 [2024-07-01 23:57:22.627]	error	go-admin/main.go:23	服务成功启动，运行在端口：8888
 [2024-07-02 00:04:13.308]	info	go-admin/main.go:13	aaa
 [2024-07-02 00:04:13.331]	error	go-admin/main.go:23	服务成功启动，运行在端口：8888
+[2024-07-06 14:12:17.047]	info	Shutdown Server ...
+[2024-07-06 14:12:17.264]	info	Server exiting

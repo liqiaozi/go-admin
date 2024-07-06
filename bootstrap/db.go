@@ -7,26 +7,29 @@ import (
 	"gorm.io/gorm/logger"
 	"io"
 	"lixuefei.com/go-admin/global"
+	mylogger "lixuefei.com/go-admin/global/logger"
 	"log"
 	"os"
 	"strconv"
 	"time"
 )
 
+// 初始化数据库
 func initializeDB() {
+	mylogger.Log.Infof("init database begin...")
 	// 根据驱动配置进行初始化
-	switch global.App.Application.Database.Driver {
+	switch global.App.Server.Database.Driver {
 	case "mysql":
 		global.App.DB = initMySqlGorm()
 	default:
 		global.App.DB = initMySqlGorm()
 	}
+	mylogger.Log.Infof("init database end...")
 }
 
 // 初始化 mysql gorm.DB
 func initMySqlGorm() *gorm.DB {
-	dbConfig := global.App.Application.Database
-
+	dbConfig := global.App.Server.Database
 	if dbConfig.Database == "" {
 		return nil
 	}
@@ -34,7 +37,7 @@ func initMySqlGorm() *gorm.DB {
 		dbConfig.Database + "?charset=" + dbConfig.Charset + "&parseTime=True&loc=Local"
 	mysqlConfig := mysql.Config{
 		DSN:                       dsn,   // DSN data source name
-		DefaultStringSize:         191,   // string 类型字段的默认长度
+		DefaultStringSize:         255,   // string 类型字段的默认长度
 		DisableDatetimePrecision:  true,  // 禁用 datetime 精度，MySQL 5.6 之前的数据库不支持
 		DontSupportRenameIndex:    true,  // 重命名索引时采用删除并新建的方式，MySQL 5.7 之前的数据库和 MariaDB 不支持重命名索引
 		DontSupportRenameColumn:   true,  // 用 `change` 重命名列，MySQL 8 之前的数据库和 MariaDB 不支持重命名列
@@ -58,14 +61,14 @@ func getGormLogWriter() logger.Writer {
 	var writer io.Writer
 
 	// 是否启用日志文件
-	if global.App.Application.Database.EnableFileLogWriter {
+	if global.App.Server.Database.EnableFileLogWriter {
 		// 自定义 Writer
 		writer = &lumberjack.Logger{
-			Filename:   global.App.Application.Log.RootDir + "/" + global.App.Application.Database.LogFilename,
-			MaxSize:    global.App.Application.Log.MaxSize,
-			MaxBackups: global.App.Application.Log.MaxBackups,
-			MaxAge:     global.App.Application.Log.MaxAge,
-			Compress:   global.App.Application.Log.Compress,
+			Filename:   global.App.Server.Log.RootDir + "/" + global.App.Server.Database.LogFilename,
+			MaxSize:    global.App.Server.Log.MaxSize,
+			MaxBackups: global.App.Server.Log.MaxBackups,
+			MaxAge:     global.App.Server.Log.MaxAge,
+			Compress:   global.App.Server.Log.Compress,
 		}
 	} else {
 		// 默认 Writer
@@ -77,7 +80,7 @@ func getGormLogWriter() logger.Writer {
 func getGormLogger() logger.Interface {
 	var logMode logger.LogLevel
 
-	switch global.App.Application.Database.LogMode {
+	switch global.App.Server.Database.LogMode {
 	case "silent":
 		logMode = logger.Silent
 	case "error":
@@ -90,9 +93,9 @@ func getGormLogger() logger.Interface {
 		logMode = logger.Info
 	}
 	return logger.New(getGormLogWriter(), logger.Config{
-		SlowThreshold:             200 * time.Millisecond,                               // 慢 SQL 阈值
-		LogLevel:                  logMode,                                              // 日志级别
-		IgnoreRecordNotFoundError: false,                                                // 忽略ErrRecordNotFound（记录未找到）错误
-		Colorful:                  !global.App.Application.Database.EnableFileLogWriter, // 禁用彩色打印
+		SlowThreshold:             200 * time.Millisecond,                          // 慢 SQL 阈值
+		LogLevel:                  logMode,                                         // 日志级别
+		IgnoreRecordNotFoundError: false,                                           // 忽略ErrRecordNotFound（记录未找到）错误
+		Colorful:                  !global.App.Server.Database.EnableFileLogWriter, // 禁用彩色打印
 	})
 }
