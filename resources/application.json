@@ -18,14 +18,29 @@
     "driver": "mysql",
     "host": "127.0.0.1",
     "port": 3306,
-    "database": "go-test",
+    "database": "go-admin",
     "username": "root",
-    "password": "root",
-    "charset": "utf8mb4",
+    "password": "123456",
+    "charset": "utf8",
     "maxIdleConnections": 10,
     "maxOpenConnections": 100,
     "logMode": "info",
     "enableFileLogWriter": true,
     "logFilename": "sql.log"
+  },
+  "jwt": {
+    "signKey": "3Bde3BGEbYqtqyEUzW3ry8jKFcaPH17fRmTmqE7MDr05Lwj95uruRKrrkb44TJ4s",
+    "jwtTtl": 43200
+  },
+  "redis": {
+    "useCluster": false,
+    "address": "127.0.0.1:6379",
+    "password": "",
+    "db": 0,
+    "clusterAddress": [
+      "172.21.0.3:7000",
+      "172.21.0.4:7001",
+      "172.21.0.2:7002"
+    ]
   }
 }

@@ -12,4 +12,6 @@ var (
 	SystemError   = CustomError{"10000", "system error"}
 	BusinessError = CustomError{"10001", "业务错误"}
 	ValidateError = CustomError{"10002", "请求参数错误"}
+	TokenError    = CustomError{"10003", "token error"}
+	ParamsError   = CustomError{"10004", "request param valid"}
 )

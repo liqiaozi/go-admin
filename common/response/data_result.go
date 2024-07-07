@@ -1,6 +1,10 @@
 package response
 
-import "lixuefei.com/go-admin/common/errors"
+import (
+	"github.com/gin-gonic/gin"
+	"lixuefei.com/go-admin/common/errors"
+	"net/http"
+)
 
 // DataResult 统一返回结构体
 type DataResult struct {
@@ -44,4 +48,12 @@ func FailByErrorWithMsg(error errors.CustomError, message string) DataResult {
 		message,
 		nil,
 	}
+}
+
+func NoAuth(c *gin.Context) {
+	c.JSON(http.StatusUnauthorized, FailByError(errors.TokenError))
+}
+
+func NoAuthWithMsg(c *gin.Context, message string) {
+	c.JSON(http.StatusUnauthorized, FailByErrorWithMsg(errors.TokenError, message))
 }

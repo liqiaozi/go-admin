@@ -2,10 +2,10 @@ package main
 
 import (
 	"context"
-	"github.com/gin-gonic/gin"
 	"lixuefei.com/go-admin/bootstrap"
 	"lixuefei.com/go-admin/global"
 	"lixuefei.com/go-admin/global/logger"
+	"lixuefei.com/go-admin/router"
 	"net/http"
 	"os"
 	"os/signal"
@@ -16,13 +16,15 @@ import (
 func main() {
 	// 初始化操作
 	bootstrap.Init()
+	//
+	Router := router.InitializeRouter()
 
 	// 创建http服务器
-	r := gin.Default()
 	srv := &http.Server{
 		Addr:    ":" + global.App.Server.ServiceInfo.Port,
-		Handler: r,
+		Handler: Router,
 	}
+	logger.Log.Infof("server run on port: %s\n", global.App.Server.ServiceInfo.Port)
 	go func() {
 		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
 			logger.Log.Infof("listen: %s\n", err)
