@@ -6,6 +6,7 @@ import (
 
 type ControllerGroup struct {
 	SysUserController
+	CaptchaController
 }
 
 var ControllerGroupApp = new(ControllerGroup)

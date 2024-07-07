@@ -11,4 +11,6 @@ func Init() {
 	registerTable()
 	// 初始化Redis
 	initRedis()
+	// 初始化本次内存
+	initLocalCache()
 }

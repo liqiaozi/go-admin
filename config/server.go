@@ -7,4 +7,5 @@ type Server struct {
 	Cors        CORS     `mapstructure:"cors" json:"cors" yaml:"cors"`
 	Jwt         Jwt      `mapstructure:"jwt" json:"jwt" yaml:"jwt"`
 	Redis       Redis    `mapstructure:"redis" json:"redis" yaml:"redis"`
+	Captcha     Captcha  `mapstructure:"captcha" json:"captcha" yaml:"captcha"`
 }

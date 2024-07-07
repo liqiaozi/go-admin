@@ -14,4 +14,5 @@ var (
 	ValidateError = CustomError{"10002", "请求参数错误"}
 	TokenError    = CustomError{"10003", "token error"}
 	ParamsError   = CustomError{"10004", "request param valid"}
+	CaptchaError  = CustomError{"10005", "get captcha error"}
 )
