@@ -11,7 +11,7 @@ type globalVars struct {
 	ConfigViper *viper.Viper
 	Server      config.Server
 	DB          *gorm.DB
-	RedisClient *redis.UniversalClient
+	RedisClient redis.UniversalClient
 }
 
 var App = new(globalVars)

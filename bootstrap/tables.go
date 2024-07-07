@@ -8,6 +8,7 @@ import (
 )
 
 func registerTable() {
+	logger.Log.Infof("[bootstrap] register table begin...")
 	db := global.App.DB
 	err := db.AutoMigrate(
 		models.SysUserEntity{},
@@ -16,5 +17,5 @@ func registerTable() {
 		logger.Log.Errorf("register table error: %s", err.Error())
 		os.Exit(0)
 	}
-	logger.Log.Infof("register table success...")
+	logger.Log.Infof("[bootstrap] register table end...")
 }

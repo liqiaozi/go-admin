@@ -21,7 +21,7 @@ var (
 
 // 初始化日志
 func initLog() {
-	fmt.Println("init log config begin...")
+	fmt.Println("[bootstrap] init log config begin...")
 	// 创建日志目录
 	createLogDir()
 	// 设置日志等级
@@ -33,7 +33,7 @@ func initLog() {
 	zapCore := getZapCore()
 	zapLogger := zap.New(zapCore, options...)
 	logger.Log = zapLogger.Sugar()
-	fmt.Println("init log config end...")
+	fmt.Println("[bootstrap] init log config end...")
 }
 
 // 扩展 Zap

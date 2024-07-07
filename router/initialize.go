@@ -2,11 +2,13 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
+	"lixuefei.com/go-admin/global/logger"
 	"net/http"
 )
 
 // 路由初始化
 func InitializeRouter() *gin.Engine {
+	logger.Log.Infof("[router] init router begin...")
 	Router := gin.New()
 	Router.Use(gin.Recovery())
 	if gin.Mode() == gin.DebugMode {
@@ -29,5 +31,6 @@ func InitializeRouter() *gin.Engine {
 	{
 		systemRouter.InitSysUserRouter(PrivateGroup) // 注册用户路由
 	}
+	logger.Log.Infof("[router] init router end...")
 	return Router
 }

@@ -15,7 +15,8 @@ func initializeConfig() *viper.Viper {
 	if configEnv := os.Getenv("VIPER_CONFIG"); configEnv != "" {
 		config = configEnv
 	}
-	fmt.Println("read config begin...")
+	fmt.Println("[bootstrap] read config begin...")
+	fmt.Println("[bootstrap] config file path: ", config)
 
 	v := viper.New()
 	v.SetConfigFile(config)
@@ -36,6 +37,6 @@ func initializeConfig() *viper.Viper {
 	if err := v.Unmarshal(&global.App.Server); err != nil {
 		panic(fmt.Errorf("read config error: %s \n", err))
 	}
-	fmt.Println("read config end...")
+	fmt.Println("[bootstrap] read config end...")
 	return v
 }

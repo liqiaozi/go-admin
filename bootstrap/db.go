@@ -16,7 +16,7 @@ import (
 
 // 初始化数据库
 func initializeDB() {
-	mylogger.Log.Infof("init database begin...")
+	mylogger.Log.Infof("[bootstrap] init database begin...")
 	// 根据驱动配置进行初始化
 	switch global.App.Server.Database.Driver {
 	case "mysql":
@@ -24,7 +24,7 @@ func initializeDB() {
 	default:
 		global.App.DB = initMySqlGorm()
 	}
-	mylogger.Log.Infof("init database end...")
+	mylogger.Log.Infof("[bootstrap] init database end...")
 }
 
 // 初始化 mysql gorm.DB
@@ -52,6 +52,7 @@ func initMySqlGorm() *gorm.DB {
 		sqlDB, _ := db.DB()
 		sqlDB.SetMaxIdleConns(dbConfig.MaxIdleConnections)
 		sqlDB.SetMaxOpenConns(dbConfig.MaxOpenConnections)
+		mylogger.Log.Infof("[bootstrap] init mysql gorm end...")
 		return db
 	}
 }

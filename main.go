@@ -1,54 +1,24 @@
 package main
 
 import (
-	"context"
 	"lixuefei.com/go-admin/bootstrap"
 	"lixuefei.com/go-admin/global"
-	"lixuefei.com/go-admin/global/logger"
 	"lixuefei.com/go-admin/router"
-	"net/http"
-	"os"
-	"os/signal"
-	"syscall"
-	"time"
 )
 
 func main() {
 	// 初始化操作
 	bootstrap.Init()
-	//
+	// 初始化路由
 	Router := router.InitializeRouter()
-
 	// 创建http服务器
-	srv := &http.Server{
-		Addr:    ":" + global.App.Server.ServiceInfo.Port,
-		Handler: Router,
-	}
-	logger.Log.Infof("server run on port: %s\n", global.App.Server.ServiceInfo.Port)
-	go func() {
-		if err := srv.ListenAndServe(); err != nil && err != http.ErrServerClosed {
-			logger.Log.Infof("listen: %s\n", err)
-		}
-	}()
+	srv := bootstrap.InitServer(":"+global.App.Server.ServiceInfo.Port, Router)
 
 	// 程序关闭前，释放数据库连接
 	defer func() {
-		if global.App.DB != nil {
-			db, _ := global.App.DB.DB()
-			db.Close()
-		}
+		bootstrap.DestroyProcesses()
 	}()
 
-	// 等待中断信号以优雅地关闭服务器（设置 5 秒的超时时间）
-	quit := make(chan os.Signal)
-	signal.Notify(quit, syscall.SIGINT, syscall.SIGTERM)
-	<-quit
-	logger.Log.Infof("Shutdown Server ...")
-
-	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
-	defer cancel()
-	if err := srv.Shutdown(ctx); err != nil {
-		logger.Log.Infof("Server Shutdown:", err)
-	}
-	logger.Log.Infof("Server exiting")
+	// 等待中断信号以优雅地关闭服务器（设置 10 秒的超时时间）
+	bootstrap.ServerShutdown(srv)
 }
