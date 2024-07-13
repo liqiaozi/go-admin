@@ -3,21 +3,23 @@ package controller
 import (
 	"github.com/gin-gonic/gin"
 	"github.com/mojocn/base64Captcha"
+	"lixuefei.com/go-admin/app/admin/model/dto"
+	"lixuefei.com/go-admin/common/component/captcha"
+	"lixuefei.com/go-admin/common/component/logger"
 	"lixuefei.com/go-admin/common/errors"
 	"lixuefei.com/go-admin/common/response"
 	"lixuefei.com/go-admin/common/utils"
 	"lixuefei.com/go-admin/global"
-	"lixuefei.com/go-admin/global/logger"
-	"lixuefei.com/go-admin/internal/models/dto"
 	"net/http"
 	"time"
 )
 
 type CaptchaController struct{}
 
-var store = base64Captcha.DefaultMemStore
+// var store = base64Captcha.DefaultMemStore
+var store = captcha.NewDefaultRedisStore()
 
-func (b *CaptchaController) GenCaptcha(c *gin.Context) {
+func (b CaptchaController) GenCaptcha(c *gin.Context) {
 	// 判断验证码是否开启
 	openCaptcha := global.App.Server.Captcha.OpenCaptcha               // 是否开启防爆次数
 	openCaptchaTimeOut := global.App.Server.Captcha.OpenCaptchaTimeOut // 缓存超时时间

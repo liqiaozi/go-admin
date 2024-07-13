@@ -2,7 +2,7 @@ package middleware
 
 import (
 	"github.com/gin-gonic/gin"
-	"lixuefei.com/go-admin/config"
+	"lixuefei.com/go-admin/bootstrap/config"
 	"lixuefei.com/go-admin/global"
 	"net/http"
 )

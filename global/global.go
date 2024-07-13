@@ -5,7 +5,7 @@ import (
 	"github.com/songzhibin97/gkit/cache/local_cache"
 	"github.com/spf13/viper"
 	"gorm.io/gorm"
-	"lixuefei.com/go-admin/config"
+	"lixuefei.com/go-admin/bootstrap/config"
 )
 
 type globalVars struct {

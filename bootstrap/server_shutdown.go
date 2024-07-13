@@ -2,7 +2,7 @@ package bootstrap
 
 import (
 	"context"
-	"lixuefei.com/go-admin/global/logger"
+	"lixuefei.com/go-admin/common/component/logger"
 	"net/http"
 	"os"
 	"os/signal"

@@ -1,15 +1,15 @@
-package system
+package service
 
 import (
+	"lixuefei.com/go-admin/app/admin/dao"
 	"lixuefei.com/go-admin/common/request"
 	"lixuefei.com/go-admin/common/response"
-	"lixuefei.com/go-admin/internal/dao"
 )
 
 type SysUserService struct {
 }
 
-func (s *SysUserService) QueryUserList(pageInfo request.PageInfo) *response.PageResult {
+func (s SysUserService) QueryUserList(pageInfo request.PageInfo) *response.PageResult {
 	pageNo := pageInfo.Page
 	pageSize := pageInfo.PageSize
 	keyword := pageInfo.Keyword

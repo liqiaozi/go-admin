@@ -10,7 +10,7 @@ func main() {
 	// 初始化操作
 	bootstrap.Init()
 	// 初始化路由
-	Router := router.InitializeRouter()
+	Router := router.InitRouter()
 	// 创建http服务器
 	srv := bootstrap.InitServer(":"+global.App.Server.ServiceInfo.Port, Router)
 

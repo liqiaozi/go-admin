@@ -1,6 +1,7 @@
-package system
+package admin
 
 type RouterGroup struct {
 	SysUserRouter
-	SysBaseRouter
+	SysRoleRouter
+	CaptchaRouter
 }

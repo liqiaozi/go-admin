@@ -3,8 +3,8 @@ package middleware
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
+	"lixuefei.com/go-admin/common/component"
 	"lixuefei.com/go-admin/common/response"
-	"lixuefei.com/go-admin/component"
 )
 
 func JWTAuth() gin.HandlerFunc {

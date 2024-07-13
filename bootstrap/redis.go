@@ -3,8 +3,8 @@ package bootstrap
 import (
 	"context"
 	"github.com/redis/go-redis/v9"
+	"lixuefei.com/go-admin/common/component/logger"
 	"lixuefei.com/go-admin/global"
-	"lixuefei.com/go-admin/global/logger"
 )
 
 func initRedis() {

@@ -3,8 +3,8 @@ package bootstrap
 import (
 	"errors"
 	"github.com/gin-gonic/gin"
+	"lixuefei.com/go-admin/common/component/logger"
 	"lixuefei.com/go-admin/global"
-	"lixuefei.com/go-admin/global/logger"
 	"net/http"
 	"time"
 )

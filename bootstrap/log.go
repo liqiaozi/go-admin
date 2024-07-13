@@ -5,11 +5,11 @@ import (
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
 	"gopkg.in/natefinch/lumberjack.v2"
+	"lixuefei.com/go-admin/common/component/logger"
 	"lixuefei.com/go-admin/common/constants"
 	"lixuefei.com/go-admin/common/utils/pathutils"
 	"lixuefei.com/go-admin/common/utils/stringutils"
 	"lixuefei.com/go-admin/global"
-	"lixuefei.com/go-admin/global/logger"
 	"os"
 	"time"
 )

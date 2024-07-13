@@ -1,16 +1,16 @@
 package dao
 
 import (
+	"lixuefei.com/go-admin/app/admin/model"
 	"lixuefei.com/go-admin/common/utils/stringutils"
 	"lixuefei.com/go-admin/global"
-	"lixuefei.com/go-admin/internal/models"
 )
 
 type SysUserDao struct{}
 
-func (s SysUserDao) QueryUserList(pageNo int, pageSize int, keyword string) (list []models.SysUserEntity, count int64, err error) {
-	var userList []models.SysUserEntity
-	tx := global.App.DB.Model(&models.SysUserEntity{})
+func (s SysUserDao) QueryUserList(pageNo int, pageSize int, keyword string) (list []model.SysUser, count int64, err error) {
+	var userList []model.SysUser
+	tx := global.App.DB.Model(&model.SysUser{})
 	if !stringutils.IsEmpty(keyword) {
 		tx.Where("c_username like ?", "%"+keyword+"%")
 	}

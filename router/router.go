@@ -2,12 +2,19 @@ package router
 
 import (
 	"github.com/gin-gonic/gin"
-	"lixuefei.com/go-admin/global/logger"
+	"lixuefei.com/go-admin/common/component/logger"
+	"lixuefei.com/go-admin/router/admin"
 	"net/http"
 )
 
+type RouterGroup struct {
+	Admin admin.RouterGroup
+}
+
+var RouterGroupApp = new(RouterGroup)
+
 // 路由初始化
-func InitializeRouter() *gin.Engine {
+func InitRouter() *gin.Engine {
 	logger.Log.Infof("[router] init router begin...")
 	Router := gin.New()
 	Router.Use(gin.Recovery())
@@ -16,7 +23,6 @@ func InitializeRouter() *gin.Engine {
 	}
 
 	PublicGroup := Router.Group("/go-admin/api")
-	PrivateGroup := Router.Group("/go-admin/api")
 	//PrivateGroup.Use(middleware.JWTAuth())
 
 	// 不做鉴权的路由
@@ -26,14 +32,11 @@ func InitializeRouter() *gin.Engine {
 			c.JSON(http.StatusOK, "ok")
 		})
 	}
-	systemRouter := RouterGroupApp.System
+	adminRouter := RouterGroupApp.Admin
 	{
-		systemRouter.InitBaseRouter(PublicGroup)
-	}
-
-	// 要做鉴权的路由
-	{
-		systemRouter.InitSysUserRouter(PrivateGroup) // 注册用户路由
+		adminRouter.InitRoleRouter(PublicGroup)
+		adminRouter.InitUserRouter(PublicGroup)
+		adminRouter.InitCaptchaRouter(PublicGroup)
 	}
 	logger.Log.Infof("[router] init router end...")
 	return Router

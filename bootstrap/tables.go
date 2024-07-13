@@ -1,9 +1,9 @@
 package bootstrap
 
 import (
+	"lixuefei.com/go-admin/app/admin/model"
+	"lixuefei.com/go-admin/common/component/logger"
 	"lixuefei.com/go-admin/global"
-	"lixuefei.com/go-admin/global/logger"
-	"lixuefei.com/go-admin/internal/models"
 	"os"
 )
 
@@ -11,7 +11,9 @@ func registerTable() {
 	logger.Log.Infof("[bootstrap] register table begin...")
 	db := global.App.DB
 	err := db.AutoMigrate(
-		models.SysUserEntity{},
+		model.SysRole{},
+		model.SysUser{},
+		model.SysUserRole{},
 	)
 	if err != nil {
 		logger.Log.Errorf("register table error: %s", err.Error())
