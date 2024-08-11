@@ -20,7 +20,7 @@ func (s SysRoleController) UpdateSysRole(c *gin.Context) {
 	c.JSON(200, response.Ok())
 }
 
-func (s SysRoleController) GetSysRoleList(c *gin.Context) {
+func (s SysRoleController) QuerySysRoleList(c *gin.Context) {
 	c.JSON(200, response.Ok())
 }
 

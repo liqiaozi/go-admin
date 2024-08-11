@@ -27,10 +27,6 @@ func (b CaptchaController) GenCaptcha(c *gin.Context) {
 
 	// 获取客户端IP
 	clientIP := c.ClientIP()
-	//value, err := global.App.RedisClient.Get(context.Background(), clientIP).Int()
-	//if err != nil {
-	//	global.App.RedisClient.Set(context.Background(), clientIP, 1, time.Second*time.Duration(openCaptchaTimeOut))
-	//}
 	value, ok := global.App.BlackCache.Get(clientIP)
 	if !ok {
 		global.App.BlackCache.Set(clientIP, 1, time.Second*time.Duration(openCaptchaTimeOut))
