@@ -15,7 +15,7 @@ type SysUser struct {
 	UpdatedTime time.Time `gorm:"column:d_update_time" json:"updatedTime" `                  // 更新时间
 	SideMode    string    `gorm:"column:c_side_mode;default:dark" json:"sideMode" `          // 用户侧边主题
 	BaseColor   string    `gorm:"column:c_base_color;default:#fff" json:"baseColor" `        // 基础颜色
-	RoleId      string    `gorm:"column:c_role_id" json:"roleId" `                           // 用户角色ID
+	RoleId      uint      `gorm:"column:c_role_id" json:"roleId" `                           // 用户角色ID
 	Role        SysRole   `gorm:"foreignKey:RoleId;references:RoleId" json:"role" `
 	Roles       []SysRole `gorm:"many2many:sys_user_role" json:"roles" `
 }

@@ -7,15 +7,18 @@ import (
 )
 
 func main() {
-	// 初始化操作
+	// 基础设施初始化
 	bootstrap.Init()
-	// 初始化路由
+
+	// 路由初始化
 	Router := router.InitRouter()
+
 	// 创建http服务器
 	srv := bootstrap.InitServer(":"+global.App.Server.ServiceInfo.Port, Router)
 
-	// 程序关闭前，释放数据库连接
+	// 程序关闭前操作
 	defer func() {
+		// 释放数据库连接
 		bootstrap.DestroyProcesses()
 	}()
 
