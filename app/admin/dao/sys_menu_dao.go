@@ -22,9 +22,9 @@ func (d SysMenuDao) AddSysMenu(sysMenu *model.SysMenu) (error, int) {
 }
 
 // QuerySysMenuById 根据菜单ID查询详情
-func (d SysMenuDao) QuerySysMenuById(menuId int) (menu *model.SysMenu, err error) {
+func (d SysMenuDao) QuerySysMenuById(menuId int) (*model.SysMenu, error) {
 	sysMenu := model.SysMenu{}
-	err = global.App.DB.Where("menu_id = ?", menuId).First(&sysMenu).Error
+	err := global.App.DB.Where("menu_id = ?", menuId).First(&sysMenu).Error
 	return &sysMenu, err
 }
 
@@ -35,6 +35,7 @@ func (d SysMenuDao) QueryAllMenu() ([]model.SysMenu, error) {
 }
 
 func (d SysMenuDao) UpdateSysMenu(sysMenu *model.SysMenu) {
+	sysMenu.UpdateTime = time.Now().UnixMilli()
 	global.App.DB.Save(sysMenu)
 }
 

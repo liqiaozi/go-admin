@@ -23,4 +23,7 @@ var (
 	SysMenuCommonError   = CustomError{"12000", "menu common error"}
 	SysMenuAddError      = CustomError{"12001", "menu add error"}
 	SysMenuNotFoundError = CustomError{"12002", "menu not found error"}
+
+	SysRoleCommonError = CustomError{"12000", "角色通用异常"}
+	SysRoleAddError    = CustomError{"13001", "新增角色异常"}
 )
