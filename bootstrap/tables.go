@@ -14,6 +14,8 @@ func registerTable() {
 		model.SysRole{},
 		model.SysUser{},
 		model.SysUserRole{},
+		model.SysMenu{},
+		model.SysRoleMenu{},
 	)
 	if err != nil {
 		logger.Log.Errorf("register table error: %s", err.Error())

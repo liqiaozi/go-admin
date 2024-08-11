@@ -7,7 +7,7 @@ type SysUserRegister struct {
 	Avatar   string `json:"avatar"`
 	Phone    string `json:"phone"`
 	Email    string `json:"email"`
-	Status   int    `json:"status" `
-	RoleId   uint   `json:"roleId"`
-	RoleIds  []uint `json:"roleIds"`
+	Status   string `json:"status" `
+	RoleId   int    `json:"roleId"`
+	RoleIds  []int  `json:"roleIds"`
 }

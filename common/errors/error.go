@@ -26,4 +26,6 @@ var (
 
 	SysRoleCommonError = CustomError{"12000", "角色通用异常"}
 	SysRoleAddError    = CustomError{"13001", "新增角色异常"}
+	SysRoleUpdateError = CustomError{"13002", "更新角色异常"}
+	SysRoleDeleteError = CustomError{"13003", "删除角色异常"}
 )

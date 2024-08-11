@@ -11,7 +11,7 @@ type SysUser struct {
 	Avatar      string     `gorm:"column:c_avatar" json:"avatar"`                             // 头像
 	Sex         string     `gorm:"column:c_sex" json:"sex"`                                   // 性别
 	Email       string     `gorm:"column:c_email" json:"email"  `                             // 用户邮箱
-	Status      string     `gorm:"column:i_status" json:"status" `                            // 用户状态 1正常 2冻结
+	Status      string     `gorm:"column:c_status" json:"status" `                            // 用户状态 1正常 2冻结
 	Remark      string     `gorm:"column:c_remark" json:"remark" `                            // 备注
 	CreatedTime time.Time  `gorm:"column:d_create_time" json:"createdTime" `                  // 创建时间
 	UpdatedTime time.Time  `gorm:"column:d_update_time" json:"updatedTime" `                  // 更新时间

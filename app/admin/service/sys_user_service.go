@@ -33,7 +33,7 @@ func (s SysUserService) QueryUserList(pageInfo request.PageInfo) *response.PageR
 }
 
 // Create 新增用户
-func (s SysUserService) Create(register dto.SysUserRegister) uint {
+func (s SysUserService) Create(register dto.SysUserRegister) int {
 	// 检查用户名是否已经存在
 	sysUser, err := dao.SysUserDao{}.QueryByUsername(register.Username)
 	if err != nil {
@@ -60,7 +60,7 @@ func (s SysUserService) Create(register dto.SysUserRegister) uint {
 		Avatar:   register.Avatar,
 		Status:   register.Status,
 		RoleId:   register.RoleId,
-		Roles:    roles,
+		SysRoles: &roles,
 	}
 	user, err = dao.SysUserDao{}.Save(user)
 	if err != nil {
