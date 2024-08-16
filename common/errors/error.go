@@ -17,8 +17,13 @@ var (
 	CaptchaError     = CustomError{"10005", "get captcha error"}
 	DatabaseSqlError = CustomError{"10006", "database sql error"}
 
-	UsernameExistError = CustomError{"11000", "username already exist"}
-	UserCreateError    = CustomError{"11001", "create user error"}
+	SysUserCommonError    = CustomError{"11000", "用户通用异常"}
+	SysUsernameExistError = CustomError{"11001", "用户名已存在"}
+	SysUserCreateError    = CustomError{"11002", "创建用户异常"}
+	SysUserQueryError     = CustomError{"11003", "查询用户异常"}
+	SysUserNoExistError   = CustomError{"11004", "用户不存在"}
+	SysUserUpdateError    = CustomError{"11005", "更新用户异常"}
+	SysUserDeleteError    = CustomError{"11006", "删除用户异常"}
 
 	SysMenuCommonError   = CustomError{"12000", "menu common error"}
 	SysMenuAddError      = CustomError{"12001", "menu add error"}
