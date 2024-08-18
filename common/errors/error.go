@@ -34,7 +34,9 @@ var (
 
 	SysMenuCommonError   = CustomError{"12000", "menu common error"}
 	SysMenuAddError      = CustomError{"12001", "新增菜单异常"}
-	SysMenuNotFoundError = CustomError{"12002", "menu not found error"}
+	SysMenuQueryError    = CustomError{"12002", "查询菜单异常"}
+	SysMenuUpdateError   = CustomError{"12003", "更新菜单异常"}
+	SysMenuNotExistError = CustomError{"12004", "菜单不存在"}
 
 	SysRoleCommonError = CustomError{"12000", "角色通用异常"}
 	SysRoleAddError    = CustomError{"13001", "新增角色异常"}

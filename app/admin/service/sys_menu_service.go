@@ -22,7 +22,7 @@ func (s SysMenuService) AddSysMenu(sysMenuAddReqDTO *dto.SysMenuAddReqDTO) *mode
 	copier.Copy(&sysMenu, sysMenuAddReqDTO)
 	err := dao.SysMenuDao{}.AddSysMenu(&sysMenu)
 	if err != nil {
-		logger.Log.Error("新增菜单失败", zap.Error(err))
+		logger.Log.Error("新增菜单失败, err: ", err.Error())
 		errors.ThrowException(errors.SysMenuAddError)
 	}
 	return &sysMenu
@@ -30,12 +30,42 @@ func (s SysMenuService) AddSysMenu(sysMenuAddReqDTO *dto.SysMenuAddReqDTO) *mode
 
 // QuerySysMenuById 根据菜单ID查询详情
 func (s SysMenuService) QuerySysMenuById(menuId int) *model.SysMenu {
+	logger.Log.Infof("查询菜单详情, menuId: %v", menuId)
 	sysMenu, err := dao.SysMenuDao{}.QuerySysMenuById(menuId)
 	if err != nil {
-		logger.Log.Error("查询菜单失败，", zap.Error(err))
-		errors.ThrowException(errors.SysMenuNotFoundError)
+		logger.Log.Error("查询菜单失败, err: ", err.Error())
+		errors.ThrowException(errors.SysMenuQueryError)
 	}
 	return sysMenu
+}
+
+// UpdateSysMenu 更新菜单
+func (s SysMenuService) UpdateSysMenu(req *dto.SysMenuUpdateReqDTO) {
+	logger.Log.Infof("更新菜单: %v", utils.Object2JsonString(req))
+
+	// 查询菜单是否存在
+	oldSysMenu, err := dao.SysMenuDao{}.QuerySysMenuById(req.MenuId)
+	if err != nil {
+		logger.Log.Error("查询菜单异常, err: ", err.Error())
+		errors.ThrowException(errors.SysMenuUpdateError)
+	}
+	if oldSysMenu == nil {
+		logger.Log.Error("菜单不存在")
+		errors.ThrowException(errors.SysMenuNotExistError)
+	}
+
+	// 更新菜单自身信息
+	newSysMenu := model.SysMenu{}
+	copier.Copy(&newSysMenu, req)
+	dao.SysMenuDao{}.UpdateSysMenu(&newSysMenu)
+
+	// 更新本菜单的子菜单关联的路径信息
+	oldPaths := oldSysMenu.Paths
+	menuList := dao.SysMenuDao{}.QuerySysMenuLikePaths(oldPaths)
+	for _, v := range menuList {
+		v.Paths = strings.Replace(v.Paths, oldPaths, req.Paths, 1)
+		dao.SysMenuDao{}.UpdateSysMenu(v)
+	}
 }
 
 func (s SysMenuService) QuerySysMenuTree() {
@@ -62,27 +92,6 @@ func getBaseChildrenList(menu *model.SysMenu, treeMap map[int][]model.SysMenu) {
 	menu.Children = treeMap[menu.MenuId]
 	for i := 0; i < len(menu.Children); i++ {
 		getBaseChildrenList(&menu.Children[i], treeMap)
-	}
-}
-
-func (s SysMenuService) UpdateSysMenu(req dto.SysMenuUpdateReqDTO) {
-	// 查询菜单是否存在
-	sysMenu, err := dao.SysMenuDao{}.QuerySysMenuById(req.MenuId)
-	if err != nil {
-		logger.Log.Error("查询菜单失败，", zap.Error(err))
-		errors.ThrowException(errors.SysMenuNotFoundError)
-	}
-	// 这里需要进行事务处理
-	// 更新菜单自身信息
-	newSysMenu := model.SysMenu{}
-	copier.Copy(&newSysMenu, req)
-	dao.SysMenuDao{}.UpdateSysMenu(&newSysMenu)
-	// 更新本菜单的子菜单关联的路径信息
-	oldPaths := sysMenu.Paths
-	menuList := dao.SysMenuDao{}.QuerySysMenuLikePaths(oldPaths)
-	for _, v := range menuList {
-		v.Paths = strings.Replace(v.Paths, oldPaths, req.Paths, 1)
-		dao.SysMenuDao{}.UpdateSysMenu(v)
 	}
 }
 

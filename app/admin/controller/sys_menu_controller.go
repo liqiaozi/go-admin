@@ -6,7 +6,7 @@ import (
 	"lixuefei.com/go-admin/app/admin/service"
 	"lixuefei.com/go-admin/common/errors"
 	"lixuefei.com/go-admin/common/response"
-	"strconv"
+	"lixuefei.com/go-admin/common/utils"
 )
 
 type SysMenuController struct{}
@@ -30,7 +30,7 @@ func (e SysMenuController) GetSysMenuById(c *gin.Context) {
 		errors.ThrowException(errors.ParamsError)
 		return
 	}
-	menuId, _ := strconv.Atoi(menuIdStr)
+	menuId, _ := utils.StringToInt(menuIdStr)
 	sysMenu := service.SysMenuService{}.QuerySysMenuById(menuId)
 	c.JSON(200, response.OkWithData(sysMenu))
 }
@@ -38,12 +38,12 @@ func (e SysMenuController) GetSysMenuById(c *gin.Context) {
 // UpdateSysMenu 更新菜单
 func (e SysMenuController) UpdateSysMenu(c *gin.Context) {
 	updateReq := dto.SysMenuUpdateReqDTO{}
-	err := c.ShouldBindJSON(updateReq)
+	err := c.ShouldBindJSON(&updateReq)
 	if err != nil {
 		errors.ThrowException(errors.ParamsError)
 		return
 	}
-	service.SysMenuService{}.UpdateSysMenu(updateReq)
+	service.SysMenuService{}.UpdateSysMenu(&updateReq)
 	c.JSON(200, response.Ok())
 }
 
