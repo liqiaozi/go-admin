@@ -15,7 +15,7 @@ func CustomExceptionHandler() gin.HandlerFunc {
 		defer func() {
 			if err := recover(); err != nil {
 				// 捕获 panic
-				logger.Log.Error("Recovered from panic: %v, detail: %v", err, string(debug.Stack()))
+				logger.Log.Errorf("Recovered from panic: %v, detail: \n %v", err, string(debug.Stack()))
 				// 判断是否是自定义错误类型
 				if customErr, ok := err.(errors.CustomError); ok {
 					c.JSON(http.StatusInternalServerError, response.FailByError(customErr))
@@ -26,7 +26,6 @@ func CustomExceptionHandler() gin.HandlerFunc {
 				c.Abort()
 			}
 		}()
-
 		c.Next()
 	}
 }

@@ -11,14 +11,15 @@ import (
 type SysMenuDao struct{}
 
 // AddSysMenu 新增菜单
-func (d SysMenuDao) AddSysMenu(sysMenu *model.SysMenu) (error, int) {
+func (d SysMenuDao) AddSysMenu(sysMenu *model.SysMenu) error {
 	sysMenu.CreateTime = time.Now().UnixMilli()
 	sysMenu.UpdateTime = time.Now().UnixMilli()
 	// 菜单名称不能重复
-	if errors.Is(global.App.DB.Where("c_title = ?", sysMenu.Title).First(&model.SysMenu{}).Error, gorm.ErrRecordNotFound) {
-		return errors.New("存在重复的菜单名称，请进行修改"), sysMenu.MenuId
+	err := global.App.DB.Where("c_menu_name = ?", sysMenu.MenuName).First(&model.SysMenu{}).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return global.App.DB.Create(sysMenu).Error
 	}
-	return global.App.DB.Create(sysMenu).Error, sysMenu.MenuId
+	return errors.New("存在重复的菜单名称")
 }
 
 // QuerySysMenuById 根据菜单ID查询详情

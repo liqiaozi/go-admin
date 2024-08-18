@@ -2,8 +2,8 @@ package model
 
 type SysMenu struct {
 	MenuId     int    `gorm:"column:i_menu_id;primaryKey;autoIncrement" json:"menuId"`
+	MenuCode   string `gorm:"column:c_menu_code" json:"menuCode"`
 	MenuName   string `gorm:"column:c_menu_name" json:"menuName"`
-	Title      string `gorm:"column:c_title" json:"title"`
 	Icon       string `gorm:"column:c_icon" json:"icon"`
 	Path       string `gorm:"column:c_path" json:"path"`
 	Paths      string `gorm:"column:c_paths" json:"paths"`
@@ -20,8 +20,8 @@ type SysMenu struct {
 	CreateTime int64  `gorm:"column:d_create_time" json:"createTime"`
 	UpdateTime int64  `gorm:"column:d_update_time" json:"updateTime"`
 
-	IsSelect bool      `gorm:"-" json:"is_select" `
-	RoleId   int       `gorm:"-"`
+	IsSelect bool      `gorm:"-" json:"isSelect,omitempty" `
+	RoleId   int       `gorm:"-" json:"isSelect,omitempty" `
 	Children []SysMenu `gorm:"-" json:"children,omitempty" `
 }
 

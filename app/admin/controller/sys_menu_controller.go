@@ -14,13 +14,13 @@ type SysMenuController struct{}
 // AddSysMenu 新增菜单
 func (e SysMenuController) AddSysMenu(c *gin.Context) {
 	sysMenuAddReq := dto.SysMenuAddReqDTO{}
-	err := c.ShouldBindJSON(sysMenuAddReq)
+	err := c.ShouldBindJSON(&sysMenuAddReq)
 	if err != nil {
 		errors.ThrowException(errors.ParamsError)
 		return
 	}
-	menuId := service.SysMenuService{}.AddSysMenu(&sysMenuAddReq)
-	c.JSON(200, response.OkWithData(menuId))
+	sysMenu := service.SysMenuService{}.AddSysMenu(&sysMenuAddReq)
+	c.JSON(200, response.OkWithData(sysMenu))
 }
 
 // GetSysMenuById 查询菜单详情

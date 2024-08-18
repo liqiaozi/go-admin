@@ -1,9 +1,16 @@
 package errors
 
+import "fmt"
+
 // CustomError 自定义错误码
 type CustomError struct {
 	ErrorCode string
 	ErrorMsg  string
+}
+
+// 实现 error 接口
+func (e CustomError) Error() string {
+	return fmt.Sprintf("%s: %s", e.ErrorCode, e.ErrorMsg)
 }
 
 // 错误码
@@ -26,7 +33,7 @@ var (
 	SysUserDeleteError    = CustomError{"11006", "删除用户异常"}
 
 	SysMenuCommonError   = CustomError{"12000", "menu common error"}
-	SysMenuAddError      = CustomError{"12001", "menu add error"}
+	SysMenuAddError      = CustomError{"12001", "新增菜单异常"}
 	SysMenuNotFoundError = CustomError{"12002", "menu not found error"}
 
 	SysRoleCommonError = CustomError{"12000", "角色通用异常"}

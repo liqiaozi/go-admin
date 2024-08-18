@@ -10,9 +10,7 @@ func init() {
 }
 
 func registerSysMenuRouter(v1 *gin.RouterGroup) {
-
 	menuController := controller.SysMenuController{}
-
 	r := v1.Group("/menu")
 	{
 		r.POST("/add", menuController.AddSysMenu)

@@ -8,22 +8,24 @@ import (
 	"lixuefei.com/go-admin/app/admin/model/dto"
 	"lixuefei.com/go-admin/common/component/logger"
 	"lixuefei.com/go-admin/common/errors"
+	"lixuefei.com/go-admin/common/utils"
 	"strings"
 )
 
 type SysMenuService struct{}
 
 // AddSysMenu 新增菜单
-func (s SysMenuService) AddSysMenu(sysMenuAddReqDTO *dto.SysMenuAddReqDTO) int {
-	sysMenu := model.SysMenu{}
-	copier.Copy(sysMenu, sysMenuAddReqDTO)
+func (s SysMenuService) AddSysMenu(sysMenuAddReqDTO *dto.SysMenuAddReqDTO) *model.SysMenu {
+	logger.Log.Infof("新增菜单：%s", utils.Object2JsonString(sysMenuAddReqDTO))
 
-	err, menuId := dao.SysMenuDao{}.AddSysMenu(&sysMenu)
+	sysMenu := model.SysMenu{}
+	copier.Copy(&sysMenu, sysMenuAddReqDTO)
+	err := dao.SysMenuDao{}.AddSysMenu(&sysMenu)
 	if err != nil {
 		logger.Log.Error("新增菜单失败", zap.Error(err))
 		errors.ThrowException(errors.SysMenuAddError)
 	}
-	return menuId
+	return &sysMenu
 }
 
 // QuerySysMenuById 根据菜单ID查询详情

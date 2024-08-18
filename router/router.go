@@ -11,12 +11,11 @@ import (
 func InitRouter() *gin.Engine {
 	logger.Log.Infof("[router] init router begin...")
 	r := gin.New()
-	r.Use(gin.Recovery())
 	if gin.Mode() == gin.DebugMode {
 		r.Use(gin.Logger())
 	}
-	r.Group("/go-admin").Use(middleware.CustomExceptionHandler())
-
+	r.Use(middleware.CustomExceptionHandler())
+	r.Group("/go-admin")
 	// 系统管理应用路由初始化
 	admin.InitRouter(r)
 	logger.Log.Infof("[router] init router end...")
