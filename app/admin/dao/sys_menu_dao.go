@@ -86,15 +86,21 @@ func (d SysMenuDao) initPaths(tx *gorm.DB, sysMenu *model.SysMenu) error {
 
 // QuerySysMenuById 根据菜单ID查询详情
 func (d SysMenuDao) QuerySysMenuById(menuId int) (*model.SysMenu, error) {
-	sysMenu := model.SysMenu{}
+	var sysMenu model.SysMenu
 	err := global.App.DB.Where("i_menu_id = ?", menuId).First(&sysMenu).Error
-	return &sysMenu, err
+	if err != nil {
+		return nil, err
+	}
+	return &sysMenu, nil
 }
 
 func (d SysMenuDao) QueryAllMenu() ([]model.SysMenu, error) {
 	var allMenus []model.SysMenu
 	err := global.App.DB.Find(&allMenus).Error
-	return allMenus, err
+	if err != nil {
+		return nil, err
+	}
+	return allMenus, nil
 }
 
 func (d SysMenuDao) UpdateSysMenu(sysMenu *model.SysMenu) {
@@ -103,7 +109,7 @@ func (d SysMenuDao) UpdateSysMenu(sysMenu *model.SysMenu) {
 }
 
 func (d SysMenuDao) QuerySysMenuLikePaths(paths string) []*model.SysMenu {
-	menus := []*model.SysMenu{}
+	var menus []*model.SysMenu
 	global.App.DB.Where("c_paths like ?", paths).Find(&menus)
 	return menus
 }

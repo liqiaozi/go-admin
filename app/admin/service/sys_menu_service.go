@@ -68,13 +68,16 @@ func (s SysMenuService) UpdateSysMenu(req *dto.SysMenuUpdateReqDTO) {
 	}
 }
 
-func (s SysMenuService) QuerySysMenuTree() {
+func (s SysMenuService) QuerySysMenuTree() []model.SysMenu {
+	logger.Log.Infof("查询菜单树.")
+
 	// 查询出所有的菜单列表信息
 	allMenus, err := dao.SysMenuDao{}.QueryAllMenu()
 	if err != nil {
-		logger.Log.Error("查询菜单失败，", zap.Error(err))
+		logger.Log.Error("查询菜单列表异常，err: ", err.Error())
 		errors.ThrowExceptionWithMsg(errors.SysMenuCommonError, "查询菜单列表异常")
 	}
+
 	// 根据父亲id进行分组
 	treeMap := make(map[int][]model.SysMenu)
 	for _, v := range allMenus {
@@ -85,6 +88,7 @@ func (s SysMenuService) QuerySysMenuTree() {
 	for i := 0; i < len(menus); i++ {
 		getBaseChildrenList(&menus[i], treeMap)
 	}
+	return menus
 }
 
 // 获取菜单的子菜单
@@ -96,8 +100,10 @@ func getBaseChildrenList(menu *model.SysMenu, treeMap map[int][]model.SysMenu) {
 }
 
 func (s SysMenuService) DeleteSysMenu(ids []int) {
+	logger.Log.Infof("删除菜单数据，param : %v", utils.Object2JsonString(ids))
 	err := dao.SysMenuDao{}.DeleteByIds(ids)
 	if err != nil {
 		logger.Log.Error("删除菜单发生异常", zap.Error(err))
+		errors.ThrowExceptionWithMsg(errors.SysMenuDeleteError, "删除菜单发生异常")
 	}
 }

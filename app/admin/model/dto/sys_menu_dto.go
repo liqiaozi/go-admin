@@ -2,7 +2,7 @@ package dto
 
 // SysMenuAddReqDTO 新增菜单请求
 type SysMenuAddReqDTO struct {
-	MenuId     int    `json:"id"`         // 编码
+	MenuId     int    `json:"menuId"`     // 编码
 	MenuName   string `json:"menuName"`   //菜单name
 	Title      string `json:"title"`      //显示名称
 	Icon       string `json:"icon"`       //图标
@@ -23,6 +23,8 @@ type SysMenuAddReqDTO struct {
 // SysMenuUpdateReqDTO 更新菜单请求
 type SysMenuUpdateReqDTO struct {
 	SysMenuAddReqDTO
+	CreateTime int64 `json:"createTime"`
+	UpdateTime int64 `json:"updateTime"`
 }
 
 type SysMenuDeleteReqDTO struct {

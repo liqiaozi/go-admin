@@ -49,13 +49,14 @@ func (e SysMenuController) UpdateSysMenu(c *gin.Context) {
 
 // GetSysMenuTree 查询菜单树
 func (e SysMenuController) GetSysMenuTree(c *gin.Context) {
-	service.SysMenuService{}.QuerySysMenuTree()
+	data := service.SysMenuService{}.QuerySysMenuTree()
+	c.JSON(200, response.OkWithData(data))
 }
 
 // DeleteSysMenu 删除指定菜单
 func (e SysMenuController) DeleteSysMenu(c *gin.Context) {
 	deleteReq := dto.SysMenuDeleteReqDTO{}
-	err := c.ShouldBindJSON(deleteReq)
+	err := c.ShouldBindJSON(&deleteReq)
 	if err != nil {
 		errors.ThrowException(errors.ParamsError)
 		return
