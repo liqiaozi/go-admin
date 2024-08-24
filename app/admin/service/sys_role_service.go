@@ -2,7 +2,6 @@ package service
 
 import (
 	"github.com/jinzhu/copier"
-	"go.uber.org/zap"
 	"lixuefei.com/go-admin/app/admin/dao"
 	"lixuefei.com/go-admin/app/admin/model"
 	"lixuefei.com/go-admin/app/admin/model/dto"
@@ -15,16 +14,15 @@ import (
 type SysRoleService struct{}
 
 func (s SysRoleService) AddSysRole(sysRoleDTO *dto.SysRoleDTO) int {
-	logger.Log.Infof("新增系统角色, params: %v", utils.Object2JsonString(sysRoleDTO))
-
+	logger.Log.Infof("新增角色, params: %v", utils.Object2JsonString(sysRoleDTO))
 	sysRole := model.SysRole{}
-	copier.Copy(sysRole, &sysRoleDTO)
-	err, roleId := dao.SysRoleDao{}.AddSysRole(&sysRole)
+	copier.Copy(&sysRole, &sysRoleDTO)
+	err := dao.SysRoleDao{}.AddSysRole(&sysRole)
 	if err != nil {
-		logger.Log.Error("新增系统角色异常", zap.Error(err))
+		logger.Log.Error("新增角色发生异常", err.Error())
 		errors.ThrowException(errors.SysRoleAddError)
 	}
-	return roleId
+	return sysRole.RoleId
 }
 
 func (s SysRoleService) QuerySysRoleById(roleId int) *model.SysRole {

@@ -6,7 +6,7 @@ import (
 	"lixuefei.com/go-admin/app/admin/service"
 	"lixuefei.com/go-admin/common/errors"
 	"lixuefei.com/go-admin/common/response"
-	"strconv"
+	"lixuefei.com/go-admin/common/utils"
 )
 
 type SysRoleController struct {
@@ -14,13 +14,13 @@ type SysRoleController struct {
 
 // AddSysRole 新增角色
 func (s SysRoleController) AddSysRole(c *gin.Context) {
-	var sysRoleDTO dto.SysRoleDTO
-	err := c.ShouldBindJSON(sysRoleDTO)
+	var addSysRole dto.SysRoleDTO
+	err := c.ShouldBindJSON(&addSysRole)
 	if err != nil {
-		errors.ThrowExceptionWithMsg(errors.ParamsError, "新增角色参数异常")
+		errors.ThrowExceptionWithMsg(errors.ParamsError, "新增角色参数不合法")
 		return
 	}
-	roleId := service.SysRoleService{}.AddSysRole(&sysRoleDTO)
+	roleId := service.SysRoleService{}.AddSysRole(&addSysRole)
 	c.JSON(200, response.OkWithData(roleId))
 }
 
@@ -28,23 +28,23 @@ func (s SysRoleController) AddSysRole(c *gin.Context) {
 func (s SysRoleController) GetSysRole(c *gin.Context) {
 	roleIdStr := c.Query("roleId")
 	if roleIdStr == "" {
-		errors.ThrowExceptionWithMsg(errors.ParamsError, "角色ID不存在")
+		errors.ThrowExceptionWithMsg(errors.ParamsError, "角色ID参数不存在")
 		return
 	}
-	roleId, _ := strconv.Atoi(roleIdStr)
+	roleId, _ := utils.StringToInt(roleIdStr)
 	sysRole := service.SysRoleService{}.QuerySysRoleById(roleId)
 	c.JSON(200, response.OkWithData(sysRole))
 }
 
 // UpdateSysRole 更新角色
 func (s SysRoleController) UpdateSysRole(c *gin.Context) {
-	var sysRoleDTO dto.SysRoleDTO
-	err := c.ShouldBindJSON(sysRoleDTO)
+	var updateSysRole dto.SysRoleDTO
+	err := c.ShouldBindJSON(&updateSysRole)
 	if err != nil {
-		errors.ThrowExceptionWithMsg(errors.ParamsError, "更新角色参数异常")
+		errors.ThrowExceptionWithMsg(errors.ParamsError, "更新角色参数不合法")
 		return
 	}
-	service.SysRoleService{}.UpdateSysRole(&sysRoleDTO)
+	service.SysRoleService{}.UpdateSysRole(&updateSysRole)
 	c.JSON(200, response.Ok())
 }
 
@@ -53,7 +53,7 @@ func (s SysRoleController) QuerySysRoleList(c *gin.Context) {
 	var rolePageQuery dto.SysRolePageQueryDTO
 	err := c.ShouldBindQuery(&rolePageQuery)
 	if err != nil {
-		errors.ThrowExceptionWithMsg(errors.ParamsError, "查询角色列表参数异常")
+		errors.ThrowExceptionWithMsg(errors.ParamsError, "查询角色列表参数不合法")
 		return
 	}
 	pageResult := service.SysRoleService{}.QuerySysRoleListByPage(&rolePageQuery)
@@ -64,10 +64,10 @@ func (s SysRoleController) QuerySysRoleList(c *gin.Context) {
 func (s SysRoleController) DeleteSysRole(c *gin.Context) {
 	roleIdStr := c.Query("roleId")
 	if roleIdStr == "" {
-		errors.ThrowExceptionWithMsg(errors.ParamsError, "角色ID不存在")
+		errors.ThrowExceptionWithMsg(errors.ParamsError, "角色ID参数不存在")
 		return
 	}
-	roleId, _ := strconv.Atoi(roleIdStr)
+	roleId, _ := utils.StringToInt(roleIdStr)
 	service.SysRoleService{}.DeleteSysRoleById(roleId)
 	c.JSON(200, response.Ok())
 }
@@ -77,7 +77,7 @@ func (s SysRoleController) UpdateSysRoleStatus(c *gin.Context) {
 	var updateRoleStatusReq dto.UpdateRoleStatusReqDTO
 	err := c.ShouldBindQuery(&updateRoleStatusReq)
 	if err != nil {
-		errors.ThrowExceptionWithMsg(errors.ParamsError, "更新角色状态参数异常")
+		errors.ThrowExceptionWithMsg(errors.ParamsError, "更新角色状态参数不合法")
 		return
 	}
 	service.SysRoleService{}.UpdateSysRoleStatus(updateRoleStatusReq.RoleId, updateRoleStatusReq.Status)

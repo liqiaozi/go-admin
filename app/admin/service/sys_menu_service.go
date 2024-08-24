@@ -17,12 +17,11 @@ type SysMenuService struct{}
 // AddSysMenu 新增菜单
 func (s SysMenuService) AddSysMenu(sysMenuAddReqDTO *dto.SysMenuAddReqDTO) *model.SysMenu {
 	logger.Log.Infof("新增菜单：%s", utils.Object2JsonString(sysMenuAddReqDTO))
-
 	sysMenu := model.SysMenu{}
 	copier.Copy(&sysMenu, sysMenuAddReqDTO)
 	err := dao.SysMenuDao{}.AddSysMenu(&sysMenu)
 	if err != nil {
-		logger.Log.Error("新增菜单失败, err: ", err.Error())
+		logger.Log.Error("新增菜单发生异常, err: ", err.Error())
 		errors.ThrowException(errors.SysMenuAddError)
 	}
 	return &sysMenu
@@ -33,7 +32,7 @@ func (s SysMenuService) QuerySysMenuById(menuId int) *model.SysMenu {
 	logger.Log.Infof("查询菜单详情, menuId: %v", menuId)
 	sysMenu, err := dao.SysMenuDao{}.QuerySysMenuById(menuId)
 	if err != nil {
-		logger.Log.Error("查询菜单失败, err: ", err.Error())
+		logger.Log.Error("查询菜单发生异常, err: ", err.Error())
 		errors.ThrowException(errors.SysMenuQueryError)
 	}
 	return sysMenu
@@ -42,11 +41,10 @@ func (s SysMenuService) QuerySysMenuById(menuId int) *model.SysMenu {
 // UpdateSysMenu 更新菜单
 func (s SysMenuService) UpdateSysMenu(req *dto.SysMenuUpdateReqDTO) {
 	logger.Log.Infof("更新菜单: %v", utils.Object2JsonString(req))
-
 	// 查询菜单是否存在
 	oldSysMenu, err := dao.SysMenuDao{}.QuerySysMenuById(req.MenuId)
 	if err != nil {
-		logger.Log.Error("查询菜单异常, err: ", err.Error())
+		logger.Log.Error("查询菜单发生异常, err: ", err.Error())
 		errors.ThrowException(errors.SysMenuUpdateError)
 	}
 	if oldSysMenu == nil {
@@ -70,11 +68,10 @@ func (s SysMenuService) UpdateSysMenu(req *dto.SysMenuUpdateReqDTO) {
 
 func (s SysMenuService) QuerySysMenuTree() []model.SysMenu {
 	logger.Log.Infof("查询菜单树.")
-
 	// 查询出所有的菜单列表信息
 	allMenus, err := dao.SysMenuDao{}.QueryAllMenu()
 	if err != nil {
-		logger.Log.Error("查询菜单列表异常，err: ", err.Error())
+		logger.Log.Error("查询菜单列表发生异常，err: ", err.Error())
 		errors.ThrowExceptionWithMsg(errors.SysMenuCommonError, "查询菜单列表异常")
 	}
 

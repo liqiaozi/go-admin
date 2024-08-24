@@ -39,7 +39,7 @@ var (
 	SysMenuNotExistError = CustomError{"12004", "菜单不存在"}
 	SysMenuDeleteError   = CustomError{"12005", "删除菜单异常"}
 
-	SysRoleCommonError = CustomError{"12000", "角色通用异常"}
+	SysRoleCommonError = CustomError{"13000", "角色通用异常"}
 	SysRoleAddError    = CustomError{"13001", "新增角色异常"}
 	SysRoleUpdateError = CustomError{"13002", "更新角色异常"}
 	SysRoleDeleteError = CustomError{"13003", "删除角色异常"}

@@ -12,14 +12,16 @@ import (
 
 type SysRoleDao struct{}
 
-func (d SysRoleDao) AddSysRole(sysRole *model.SysRole) (error, int) {
+// AddSysRole 新增角色
+func (d SysRoleDao) AddSysRole(sysRole *model.SysRole) error {
+	var err error
 	sysRole.CreatedTime = time.Now().UnixMilli()
 	sysRole.UpdatedTime = time.Now().UnixMilli()
-	// rolekey和roleName不能重复
-	if errors.Is(global.App.DB.Where("c_role_key = ? or c_role_name = ?", sysRole.RoleKey, sysRole.RoleName).First(&model.SysRole{}).Error, gorm.ErrRecordNotFound) {
-		return errors.New("存在重复的角色编码或角色名称，请进行修改"), sysRole.RoleId
+	err = global.App.DB.Where("c_role_key = ? or c_role_name = ?", sysRole.RoleKey, sysRole.RoleName).First(&model.SysRole{}).Error
+	if errors.Is(err, gorm.ErrRecordNotFound) {
+		return global.App.DB.Create(sysRole).Error
 	}
-	return global.App.DB.Create(sysRole).Error, sysRole.RoleId
+	return err
 }
 
 func (d SysRoleDao) QuerySysRoleById(roleId int) (*model.SysRole, error) {
