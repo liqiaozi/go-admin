@@ -51,7 +51,7 @@ func (s SysRoleController) UpdateSysRole(c *gin.Context) {
 // QuerySysRoleList 查询角色列表
 func (s SysRoleController) QuerySysRoleList(c *gin.Context) {
 	var rolePageQuery dto.SysRolePageQueryDTO
-	err := c.ShouldBindQuery(&rolePageQuery)
+	err := c.ShouldBindJSON(&rolePageQuery)
 	if err != nil {
 		errors.ThrowExceptionWithMsg(errors.ParamsError, "查询角色列表参数不合法")
 		return
@@ -75,7 +75,7 @@ func (s SysRoleController) DeleteSysRole(c *gin.Context) {
 // UpdateSysRoleStatus 更新角色状态
 func (s SysRoleController) UpdateSysRoleStatus(c *gin.Context) {
 	var updateRoleStatusReq dto.UpdateRoleStatusReqDTO
-	err := c.ShouldBindQuery(&updateRoleStatusReq)
+	err := c.ShouldBindJSON(&updateRoleStatusReq)
 	if err != nil {
 		errors.ThrowExceptionWithMsg(errors.ParamsError, "更新角色状态参数不合法")
 		return

@@ -43,4 +43,5 @@ var (
 	SysRoleAddError    = CustomError{"13001", "新增角色异常"}
 	SysRoleUpdateError = CustomError{"13002", "更新角色异常"}
 	SysRoleDeleteError = CustomError{"13003", "删除角色异常"}
+	SysRoleExistError  = CustomError{"13004", "角色已存在"}
 )

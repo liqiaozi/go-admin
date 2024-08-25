@@ -7,7 +7,7 @@ import (
 )
 
 type SysRoleDTO struct {
-	RoleId      int             `json:"id"`           // 角色编码
+	RoleId      int             `json:"roleId"`       // 角色编码
 	RoleName    string          `json:"roleName"`     // 角色名称
 	RoleKey     string          `json:"roleKey"`      // 角色代码
 	Status      string          `json:"status"`       // 状态 1禁用 2正常
@@ -29,6 +29,6 @@ type SysRolePageQueryDTO struct {
 }
 
 type UpdateRoleStatusReqDTO struct {
-	RoleId int    `json:"id"`     // 角色编码
+	RoleId int    `json:"roleId"` // 角色编码
 	Status string `json:"status"` // 状态 1禁用 2正常
 }
